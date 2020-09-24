@@ -37,3 +37,83 @@ fill(175);
 ellipse(location.x, location.y, 20, 20);
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//declare Mover object
+Mover mover;
+
+void setup() { 
+  size(600, 600);
+  smooth();
+  frameRate(100);
+  background(0);
+  // make mover object
+  mover = new Mover();
+  
+}
+
+void draw() {
+  noStroke();
+  fill(0);
+  rect(0, 0, 600, 600);
+  
+  //call functions on mover object
+  mover.update();
+  mover.bounce();
+  mover.display();
+}
+
+class Mover {
+  
+  //object has 2 PVectors
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
+  float topspeed;
+  
+  Mover() {
+    location = new PVector(354, 294);
+    velocity = new PVector(3.9, 6.7);
+    topspeed = 5;
+    //acceleration = new PVector(0, .25);
+  }
+  
+  void update() {
+    acceleration = new PVector(random(-0.5, 0.5), random(-0.5, 0.5));
+    acceleration.normalize();
+    
+    velocity.add(acceleration);
+    velocity.limit(topspeed);
+    location.add(velocity);
+  }
+  
+  
+  void bounce() {
+    if ((location.x > 600) || (location.x < 0)) {
+      velocity.x = velocity.x * -1;
+    }
+      
+    if ((location.y > 600) || (location.y < 0)) {
+      velocity.y = velocity.y * -1;
+    }
+  }
+  
+  
+  void display() {
+    stroke(0);
+    fill(175);
+    ellipse(location.x, location.y, 20, 20);
+  }
+
+}
