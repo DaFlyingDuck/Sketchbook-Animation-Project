@@ -1,0 +1,52 @@
+// Taiki Shickele
+// Complex Shapes and Animation Techniques
+// Sept. 22, 2020
+
+
+// Declare Variables
+
+float a;
+
+float theta;
+
+void setup() {
+  size(600, 600, P2D);
+  a = 0;
+  theta = 0;
+}
+
+void draw() {
+  background(160);
+  
+  a = a + .25;
+  if (a > 400) {
+   a = 0; 
+  }
+  
+  theta = theta + .5;
+  if (theta > 360) {
+    theta = 0;
+    
+  }
+  
+  circles(a, 0, theta);
+  rect(200, 200, 200 ,200);
+}
+
+void circles(float x, float y, float theta) {
+  pushMatrix(); // begin transformations by making matrix multiplication local to here
+  translate(300 + x, 300 + y);
+  rotate(radians(theta));
+  strokeWeight(5);
+
+  ellipse(0, 0, 100, 100);
+  ellipse(0, 0, 75, 75);
+  ellipse(0, 0, 50, 50);
+  ellipse(0, 0, 25, 25);
+  line(0 , 0, 75, 0);
+  line(0, 0, 0, 75);
+  line(0, 0, -75, 0);
+  line(0, 0, 0, -75);
+  popMatrix(); // end transformations
+  
+}
