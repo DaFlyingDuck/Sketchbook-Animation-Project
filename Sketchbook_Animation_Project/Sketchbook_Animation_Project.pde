@@ -1,10 +1,9 @@
 
-
 // Taiki Shickele 
 // Sketchbook Solar System Vector Animation Project
 //September 25 2020
 
-//Collsion with sun for comet, possibly moon, better planet textures,
+// To do: Collsion with sun for comet, possibly moon, better planet textures,
 
 import ddf.minim.*;
 import ddf.minim.analysis.*;
@@ -32,7 +31,7 @@ void setup(){
   background(0);
   translate(400, 300);
   
-  minim = new Minim(this);
+  minim = new Minim(this); // Plays background music
   song = minim.loadFile("Space_Background_Music.mp3");
   song.play();
   
@@ -46,8 +45,8 @@ void draw() {
   translate(400, 300);
   rect(-400, -300, 800, 600);
   
-  t = t + 1; // 100tps
-  //functions on class
+  t = t + 1; // 100tps 
+  // animation update and display
   animation.update_values();
   animation.display();
   
@@ -55,10 +54,10 @@ void draw() {
 
 
 
-class Body {
+class Body { 
   
   // MERCURY
-  PVector Mercury_location;
+  PVector Mercury_location; // first create variables for each parameter of body
   PVector Mercury_velocity;
   PVector Mercury_centri_accel;
   PVector Mercury_perturbations;
@@ -88,7 +87,7 @@ class Body {
   
   
   
-  Body() { //initialize values for orbital bodies
+  Body() { //initialize/set values for orbital parameters
     
     Mercury_location = new PVector(0, 96);
     Mercury_velocity = new PVector(0.6914, 0);
@@ -116,14 +115,14 @@ class Body {
     
   }
   
-  void update_values() {
+  void update_values() { // updates the parameters of the orbit e.g. velocity, position each tick
     
     //=========================================================================================================================================
     //               MERCURY
     
     PVector d_comet = PVector.sub(Comet_location, Mercury_location); // finds the vector pointing from the planet to the comet  
     
-    if (d_comet.mag() < 50) {
+    if (d_comet.mag() < 50) { // sets acceleration towards comet depending on distance
       d_comet.normalize();
       d_comet.mult(0.002);
       Mercury_perturbations = d_comet;
@@ -268,7 +267,7 @@ class Body {
     //=================================================================================================================================================
     //                COMET
     
-    if (t == 600) { // makes it so the comet's velocity is not set until 3secs in
+    if (t == 600) { // makes it so the comet doesnt start moving towards the solar system until 6secs in
     
       PVector v_comet = new PVector(250, -350); // setting the intial velocity of the comet towards the solar system
       PVector dir0 = PVector.sub(v_comet, Comet_location);
@@ -281,7 +280,7 @@ class Body {
     
     if (t >= 600) {
     
-      PVector dir3 = PVector.sub(Sun_location, Comet_location); // find vector pointing towards Sun
+      PVector dir3 = PVector.sub(Sun_location, Comet_location); // find vector pointing towards Sun to simulate gravity
     
       if (dir3.mag() < 300) {
         dir3.normalize();
@@ -302,7 +301,7 @@ class Body {
     }
     
     
-    PVector d_comet4 = PVector.sub(Earth_location, Comet_location); // finds the vector pointing from the comet to Earth
+    PVector d_comet4 = PVector.sub(Earth_location, Comet_location); // finds the vector pointing from the comet to Earth to make comet accelerate towards Earth if it gets close
     
     if (d_comet4.mag() < 50) {
       d_comet4.normalize();
@@ -328,7 +327,7 @@ class Body {
     }
     
     
-    PVector d_comet5 = PVector.sub(Venus_location, Comet_location); // finds the vector pointing from the comet to Venus
+    PVector d_comet5 = PVector.sub(Venus_location, Comet_location); // finds the vector pointing from the comet to Venus to make comet accelerate towards Venus if it gets close
     
     if (d_comet5.mag() < 50) {
       d_comet5.normalize();
@@ -354,7 +353,7 @@ class Body {
     }
     
     
-    PVector d_comet6 = PVector.sub(Mercury_location, Comet_location); // finds the vector pointing from the comet to Mercury
+    PVector d_comet6 = PVector.sub(Mercury_location, Comet_location); // finds the vector pointing from the comet to Mercury to make comet accelerate towards Mercury if it gets close
     
     if (d_comet6.mag() < 50) {
       d_comet6.normalize();
@@ -394,7 +393,7 @@ class Body {
     fill(0);
     stroke(255);
     strokeWeight(1);
-    ellipse(0, 0, 500, 500); 
+    ellipse(0, 0, 500, 500); // white rings showing the original path of the bodies
     ellipse(0, 0, 344, 344);
     ellipse(0, 0, 192, 192);
     fill(255);
@@ -405,6 +404,7 @@ class Body {
     
     noStroke();
     
+    //display planets 
     fill(155, 139, 119); // mercury (brown/grey)
     ellipse(Mercury_location.x, Mercury_location.y, 7.5, 7.5);
     
